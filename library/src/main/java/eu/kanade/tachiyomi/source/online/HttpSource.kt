@@ -164,6 +164,60 @@ abstract class HttpSource : CatalogueSource {
      */
     protected abstract fun mangaDetailsParse(response: Response): SManga
 
+    // KMK -->
+    /**
+     * Whether parsing related mangas in manga page or extension provide custom related mangas request (true)
+     * or using search keyword to search for related mangas (false - default)
+     * @default false
+     * @since komikku/extensions-lib 1.6
+     */
+    protected open val supportsRelatedMangas: Boolean = false
+    protected open val disableRelatedMangas: Boolean = false
+
+    /**
+     * Get all the available related mangas for a manga.
+     * Normally it's not needed to override this method.
+     *
+     * @since komikku/extensions-lib 1.6
+     * @param manga the current manga to get related mangas.
+     * @return the related mangas for the current manga.
+     * @throws UnsupportedOperationException if a source doesn't support related mangas.
+     */
+    override suspend fun getRelatedMangaList(manga: SManga): List<SManga> {
+        throw Exception("Stub!")
+    }
+
+    /**
+     * Fetch related mangas by searching for each keywords from manga's title
+     *
+     * @since komikku/extensions-lib 1.6
+     */
+    protected open suspend fun getRelatedMangaListBySearch(manga: SManga): List<SManga> {
+        throw Exception("Stub!")
+    }
+
+    /**
+     * Returns the request for get related manga list. Override only if it's needed to override
+     * the url, send different headers or request method like POST.
+     * If using this, must also: 'override val supportsRelatedMangas = true'
+     *
+     * @since komikku/extensions-lib 1.6
+     * @param manga the manga to look for related mangas.
+     */
+    protected open fun relatedMangaListRequest(manga: SManga): Request {
+        throw Exception("Stub!")
+    }
+
+    /**
+     * Parses the response from the site and returns a list of related mangas.
+     * If using this, must also: 'override val supportsRelatedMangas = true'
+     *
+     * @since komikku/extensions-lib 1.6
+     * @param response the response from the site.
+     */
+    protected open fun relatedMangaListParse(response: Response): List<SManga> = throw Exception("Stub!")
+    // KMK <--
+
     /**
      * Returns an observable with the updated chapter list for a manga. Normally it's not needed to
      * override this method.

@@ -39,6 +39,18 @@ interface Source {
      */
     suspend fun getChapterList(manga: SManga): List<SChapter> = throw Exception("Stub!")
 
+    // KMK -->
+    /**
+     * Get all the available related mangas for a manga.
+     *
+     * @since komikku/extensions-lib 1.6
+     * @param manga the current manga to get related mangas.
+     * @return the related mangas for the current manga.
+     */
+    suspend fun getRelatedMangaList(manga: SManga): List<SManga> =
+        throw Exception("Stub!")
+    // KMK <--
+
     /**
      * Get the list of pages a chapter has. Pages should be returned
      * in the expected order; the index is ignored.

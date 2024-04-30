@@ -114,6 +114,36 @@ abstract class ParsedHttpSource : HttpSource() {
      */
     protected abstract fun mangaDetailsParse(document: Document): SManga
 
+    // KMK -->
+    /**
+     * Parses the response from the site and returns a list of related mangas.
+     * If using this, must also: 'override val supportsRelatedMangas = true'
+     *
+     * @since komikku/extensions-lib 1.6
+     * @param response the response from the site.
+     */
+    override fun relatedMangaListParse(response: Response): List<SManga> {
+        throw Exception("Stub!")
+    }
+
+    /**
+     * Returns the Jsoup selector that returns a list of [Element] corresponding to each related mangas.
+     * If using this, must also: 'override val supportsRelatedMangas = true'
+     *
+     * @since komikku/extensions-lib 1.6
+     */
+    protected open fun relatedMangaListSelector(): String = throw Exception("Stub!")
+
+    /**
+     * Returns a manga from the given element.
+     * If using this, must also: 'override val supportsRelatedMangas = true'
+     *
+     * @since komikku/extensions-lib 1.6
+     * @param element an element obtained from [relatedMangaListSelector].
+     */
+    protected open fun relatedMangaFromElement(element: Element): SManga = throw Exception("Stub!")
+    // KMK <--
+
     /**
      * Parses the response from the site and returns a list of chapters.
      *
