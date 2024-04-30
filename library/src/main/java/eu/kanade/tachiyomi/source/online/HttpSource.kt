@@ -172,6 +172,20 @@ abstract class HttpSource : CatalogueSource {
      * @since komikku/extensions-lib 1.6
      */
     protected open val supportsRelatedMangas: Boolean = false
+
+    /**
+     * Extensions provide custom [relatedMangaListRequest] and [relatedMangaListParse]
+     * while also want to use App's [getRelatedMangaListBySearch] together.
+     * @default false
+     * @since komikku/extensions-lib 1.6
+     */
+    protected open val supportsRelatedMangasAndSearch: Boolean = false
+
+    /**
+     * Disable showing any related titles
+     * @default false
+     * @since komikku/extensions-lib 1.6
+     */
     protected open val disableRelatedMangas: Boolean = false
 
     /**
@@ -184,6 +198,19 @@ abstract class HttpSource : CatalogueSource {
      * @throws UnsupportedOperationException if a source doesn't support related mangas.
      */
     override suspend fun getRelatedMangaList(manga: SManga): List<SManga> {
+        throw Exception("Stub!")
+    }
+
+    /**
+     * Fetch related mangas for a manga from source/site.
+     * Normally it's not needed to override this method.
+     *
+     * @since komikku/extensions-lib 1.6
+     * @param manga the current manga to get related mangas.
+     * @return the related mangas for the current manga.
+     * @throws UnsupportedOperationException if a source doesn't support related mangas.
+     */
+    protected open suspend fun fetchRelatedMangaList(manga: SManga): List<SManga> {
         throw Exception("Stub!")
     }
 
