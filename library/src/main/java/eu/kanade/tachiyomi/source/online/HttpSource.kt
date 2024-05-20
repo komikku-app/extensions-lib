@@ -166,40 +166,11 @@ abstract class HttpSource : CatalogueSource {
 
     // KMK -->
     /**
-     * Whether parsing related mangas in manga page or extension provide custom related mangas request (true)
-     * or using search keyword to search for related mangas (false - default)
-     * @default false
+     * Whether parsing related mangas in manga page or extension provide custom related mangas request.
+     * @default true
      * @since komikku/extensions-lib 1.6
      */
-    protected open val supportsRelatedMangas: Boolean = false
-
-    /**
-     * Extensions provide custom [relatedMangaListRequest] and [relatedMangaListParse]
-     * while also want to use App's [getRelatedMangaListBySearch] together.
-     * @default false
-     * @since komikku/extensions-lib 1.6
-     */
-    protected open val supportsRelatedMangasAndSearch: Boolean = false
-
-    /**
-     * Disable showing any related titles
-     * @default false
-     * @since komikku/extensions-lib 1.6
-     */
-    protected open val disableRelatedMangas: Boolean = false
-
-    /**
-     * Get all the available related mangas for a manga.
-     * Normally it's not needed to override this method.
-     *
-     * @since komikku/extensions-lib 1.6
-     * @param manga the current manga to get related mangas.
-     * @return the related mangas for the current manga.
-     * @throws UnsupportedOperationException if a source doesn't support related mangas.
-     */
-    override suspend fun getRelatedMangaList(manga: SManga): List<SManga> {
-        throw Exception("Stub!")
-    }
+    override val supportsRelatedMangas: Boolean get() = true
 
     /**
      * Fetch related mangas for a manga from source/site.
@@ -210,16 +181,7 @@ abstract class HttpSource : CatalogueSource {
      * @return the related mangas for the current manga.
      * @throws UnsupportedOperationException if a source doesn't support related mangas.
      */
-    protected open suspend fun fetchRelatedMangaList(manga: SManga): List<SManga> {
-        throw Exception("Stub!")
-    }
-
-    /**
-     * Fetch related mangas by searching for each keywords from manga's title
-     *
-     * @since komikku/extensions-lib 1.6
-     */
-    protected open suspend fun getRelatedMangaListBySearch(manga: SManga): List<SManga> {
+    override suspend fun fetchRelatedMangaList(manga: SManga): List<SManga> {
         throw Exception("Stub!")
     }
 

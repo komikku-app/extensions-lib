@@ -45,10 +45,12 @@ interface Source {
      *
      * @since komikku/extensions-lib 1.6
      * @param manga the current manga to get related mangas.
-     * @return the related mangas for the current manga.
+     * @return a list of <keyword, related mangas>
      */
-    suspend fun getRelatedMangaList(manga: SManga): List<SManga> =
-        throw Exception("Stub!")
+    suspend fun getRelatedMangaList(
+        manga: SManga,
+        pushResults: suspend (relatedManga: Pair<String, List<SManga>>, completed: Boolean) -> Unit,
+    ): Unit = throw Exception("Stub!")
     // KMK <--
 
     /**
