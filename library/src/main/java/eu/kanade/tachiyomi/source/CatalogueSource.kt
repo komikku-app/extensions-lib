@@ -80,7 +80,9 @@ interface CatalogueSource : Source {
     override suspend fun getRelatedMangaList(
         manga: SManga,
         pushResults: suspend (relatedManga: Pair<String, List<SManga>>, completed: Boolean) -> Unit,
-    )
+    ) {
+        throw Exception("Stub!")
+    }
 
     /**
      * Get related mangas provided by extension
@@ -91,7 +93,9 @@ interface CatalogueSource : Source {
     suspend fun getRelatedMangaListByExtension(
         manga: SManga,
         pushResults: suspend (relatedManga: Pair<String, List<SManga>>, completed: Boolean) -> Unit,
-    )
+    ) {
+        throw Exception("Stub!")
+    }
 
     /**
      * Fetch related mangas for a manga from source/site.
@@ -111,7 +115,9 @@ interface CatalogueSource : Source {
      * @since komikku/extensions-lib 1.6
      * @return List of keywords.
      */
-    fun String.stripKeywordForRelatedMangas(): List<String>
+    fun String.stripKeywordForRelatedMangas(): List<String> {
+        throw Exception("Stub!")
+    }
 
     /**
      * Get related mangas by searching for each keywords from manga's title.
@@ -122,6 +128,8 @@ interface CatalogueSource : Source {
     suspend fun getRelatedMangaListBySearch(
         manga: SManga,
         pushResults: suspend (relatedManga: Pair<String, List<SManga>>, completed: Boolean) -> Unit,
-    )
+    ) {
+        throw Exception("Stub!")
+    }
     // KMK <--
 }
