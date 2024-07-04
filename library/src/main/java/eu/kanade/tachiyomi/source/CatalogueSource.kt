@@ -3,7 +3,6 @@ package eu.kanade.tachiyomi.source
 import eu.kanade.tachiyomi.source.model.FilterList
 import eu.kanade.tachiyomi.source.model.MangasPage
 import eu.kanade.tachiyomi.source.model.SManga
-import rx.Observable
 
 @Suppress("unused")
 interface CatalogueSource : Source {
@@ -19,27 +18,30 @@ interface CatalogueSource : Source {
     val supportsLatest: Boolean
 
     /**
-     * Returns an observable containing a page with a list of manga.
+     * Get a page with a list of manga.
      *
+     * @since extensions-lib 1.5
      * @param page the page number to retrieve.
      */
-    fun fetchPopularManga(page: Int): Observable<MangasPage>
+    suspend fun getPopularManga(page: Int): MangasPage
 
     /**
-     * Returns an observable containing a page with a list of manga.
+     * Get a page with a list of manga.
      *
+     * @since extensions-lib 1.5
      * @param page the page number to retrieve.
      * @param query the search query.
      * @param filters the list of filters to apply.
      */
-    fun fetchSearchManga(page: Int, query: String, filters: FilterList): Observable<MangasPage>
+    suspend fun getSearchManga(page: Int, query: String, filters: FilterList): MangasPage
 
     /**
-     * Returns an observable containing a page with a list of latest manga updates.
+     * Get a page with a list of latest manga updates.
      *
+     * @since extensions-lib 1.5
      * @param page the page number to retrieve.
      */
-    fun fetchLatestUpdates(page: Int): Observable<MangasPage>
+    suspend fun getLatestUpdates(page: Int): MangasPage
 
     /**
      * Returns the list of filters for the source.
@@ -106,8 +108,7 @@ interface CatalogueSource : Source {
      * @return the related mangas for the current manga.
      * @throws UnsupportedOperationException if a source doesn't support related mangas.
      */
-    suspend fun fetchRelatedMangaList(manga: SManga): List<SManga> =
-        throw Exception("Stub!")
+    suspend fun fetchRelatedMangaList(manga: SManga): List<SManga> = throw UnsupportedOperationException("Unsupported!")
 
     /**
      * Slit & strip manga's title into separate searchable keywords.

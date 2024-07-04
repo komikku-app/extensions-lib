@@ -3,16 +3,14 @@ package eu.kanade.tachiyomi.source
 import eu.kanade.tachiyomi.source.model.Page
 import eu.kanade.tachiyomi.source.model.SChapter
 import eu.kanade.tachiyomi.source.model.SManga
-import rx.Observable
 
 /**
  * A basic interface for creating a source. It could be an online source, a local source, etc...
  */
-@Suppress("unused")
 interface Source {
 
     /**
-     * Id for the source. Must be unique.
+     * ID for the source. Must be unique.
      */
     val id: Long
 
@@ -28,7 +26,7 @@ interface Source {
      * @param manga the manga to update.
      * @return the updated manga.
      */
-    suspend fun getMangaDetails(manga: SManga): SManga = throw Exception("Stub!")
+    suspend fun getMangaDetails(manga: SManga): SManga
 
     /**
      * Get all the available chapters for a manga.
@@ -37,7 +35,17 @@ interface Source {
      * @param manga the manga to update.
      * @return the chapters for the manga.
      */
-    suspend fun getChapterList(manga: SManga): List<SChapter> = throw Exception("Stub!")
+    suspend fun getChapterList(manga: SManga): List<SChapter>
+
+    /**
+     * Get the list of pages a chapter has. Pages should be returned
+     * in the expected order; the index is ignored.
+     *
+     * @since komikku/extensions-lib 1.7
+     * @param chapter the chapter.
+     * @return the pages for the chapter.
+     */
+    suspend fun getPageList(chapter: SChapter): List<Page>
 
     // KMK -->
     /**
@@ -51,27 +59,6 @@ interface Source {
         manga: SManga,
         exceptionHandler: (Throwable) -> Unit,
         pushResults: suspend (relatedManga: Pair<String, List<SManga>>, completed: Boolean) -> Unit,
-    ): Unit = throw Exception("Stub!")
+    )
     // KMK <--
-
-    /**
-     * Get the list of pages a chapter has. Pages should be returned
-     * in the expected order; the index is ignored.
-     *
-     * @param chapter the chapter.
-     * @return the pages for the chapter.
-     */
-    fun fetchPageList(chapter: SChapter): Observable<List<Page>>
-
-    @Deprecated(
-        "Use the non-RxJava API instead",
-        ReplaceWith("getMangaDetails"),
-    )
-    fun fetchMangaDetails(manga: SManga): Observable<SManga> = throw Exception("Stub!")
-
-    @Deprecated(
-        "Use the non-RxJava API instead",
-        ReplaceWith("getChapterList"),
-    )
-    fun fetchChapterList(manga: SManga): Observable<List<SChapter>> = throw Exception("Stub!")
 }
