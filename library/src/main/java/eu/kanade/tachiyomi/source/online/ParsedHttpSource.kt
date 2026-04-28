@@ -11,12 +11,12 @@ import org.jsoup.nodes.Element
 /**
  * A simple implementation for sources from a website using Jsoup, an HTML parser.
  */
-@Suppress("unused")
+@Suppress("unused", "unused_parameter")
+@Deprecated("use HttpSource instead", replaceWith = ReplaceWith("HttpSource"))
 abstract class ParsedHttpSource : HttpSource() {
 
     /**
      * Parses the response from the site and returns a [MangasPage] object.
-     * Normally it's not needed to override this method.
      *
      * @param response the response from the site.
      */
@@ -45,7 +45,6 @@ abstract class ParsedHttpSource : HttpSource() {
 
     /**
      * Parses the response from the site and returns a [MangasPage] object.
-     * Normally it's not needed to override this method.
      *
      * @param response the response from the site.
      */
@@ -74,7 +73,6 @@ abstract class ParsedHttpSource : HttpSource() {
 
     /**
      * Parses the response from the site and returns a [MangasPage] object.
-     * Normally it's not needed to override this method.
      *
      * @param response the response from the site.
      */
@@ -103,7 +101,6 @@ abstract class ParsedHttpSource : HttpSource() {
 
     /**
      * Parses the response from the site and returns the details of a manga.
-     * Normally it's not needed to override this method.
      *
      * @param response the response from the site.
      */
@@ -118,7 +115,61 @@ abstract class ParsedHttpSource : HttpSource() {
      */
     protected abstract fun mangaDetailsParse(document: Document): SManga
 
+    /**
+     * Parses the response from the site and returns a list of chapters.
+     *
+     * @param response the response from the site.
+     */
+    override fun chapterListParse(response: Response): List<SChapter> {
+        throw Exception("Stub!")
+    }
+
+    /**
+     * Returns the Jsoup selector that returns a list of [Element] corresponding to each chapter.
+     */
+    protected abstract fun chapterListSelector(): String
+
+    /**
+     * Returns a chapter from the given element.
+     *
+     * @param element an element obtained from [chapterListSelector].
+     */
+    protected abstract fun chapterFromElement(element: Element): SChapter
+
+    /**
+     * Parses the response from the site and returns the page list.
+     *
+     * @param response the response from the site.
+     */
+    override fun pageListParse(response: Response): List<Page> {
+        throw Exception("Stub!")
+    }
+
+    /**
+     * Returns a page list from the given document.
+     *
+     * @param document the parsed document.
+     */
+    protected abstract fun pageListParse(document: Document): List<Page>
+
+    /**
+     * Parse the response from the site and returns the absolute url to the source image.
+     *
+     * @param response the response from the site.
+     */
+    override fun imageUrlParse(response: Response): String {
+        throw Exception("Stub!")
+    }
+
+    /**
+     * Returns the absolute url to the source image from the document.
+     *
+     * @param document the parsed document.
+     */
+    protected abstract fun imageUrlParse(document: Document): String
+
     // KMK -->
+
     /**
      * Parses the response from the site and returns a list of related mangas.
      * Normally it's not needed to override this method.
@@ -145,60 +196,4 @@ abstract class ParsedHttpSource : HttpSource() {
      */
     protected open fun relatedMangaFromElement(element: Element): SManga = throw Exception("Stub!")
     // KMK <--
-
-    /**
-     * Parses the response from the site and returns a list of chapters.
-     * Normally it's not needed to override this method.
-     *
-     * @param response the response from the site.
-     */
-    override fun chapterListParse(response: Response): List<SChapter> {
-        throw Exception("Stub!")
-    }
-
-    /**
-     * Returns the Jsoup selector that returns a list of [Element] corresponding to each chapter.
-     */
-    protected abstract fun chapterListSelector(): String
-
-    /**
-     * Returns a chapter from the given element.
-     *
-     * @param element an element obtained from [chapterListSelector].
-     */
-    protected abstract fun chapterFromElement(element: Element): SChapter
-
-    /**
-     * Parses the response from the site and returns the page list.
-     * Normally it's not needed to override this method.
-     *
-     * @param response the response from the site.
-     */
-    override fun pageListParse(response: Response): List<Page> {
-        throw Exception("Stub!")
-    }
-
-    /**
-     * Returns a page list from the given document.
-     *
-     * @param document the parsed document.
-     */
-    protected abstract fun pageListParse(document: Document): List<Page>
-
-    /**
-     * Parse the response from the site and returns the absolute url to the source image.
-     * Normally it's not needed to override this method.
-     *
-     * @param response the response from the site.
-     */
-    override fun imageUrlParse(response: Response): String {
-        throw Exception("Stub!")
-    }
-
-    /**
-     * Returns the absolute url to the source image from the document.
-     *
-     * @param document the parsed document.
-     */
-    protected abstract fun imageUrlParse(document: Document): String
 }
